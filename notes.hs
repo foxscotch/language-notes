@@ -138,5 +138,34 @@ take 3 (repeat 7)  -- [7, 7, 7]
 -- replicate serves a similar purpose as repeat, with simpler usage
 replicate 3 7  -- [7, 7, 7]
 
--- List comprehensions are simple enough, if you ignore the strange separators.
+-- List comprehensions are simple enough, if you ignore the strange separators,
+-- which are apparently based on mathematical notation.
 [x*2 | x <- [1..10]]  -- [2, 4, 6, 8..20]  (equivalent to (x*2 for x in range(10)) in Python)
+-- Predicates can be used to filter the results. More than one can be used.
+[x*2 | x <- [1..10], mod x 2 == 0]  -- [4, 8, 12, 16, 20]
+[x | x <- [1..50], odd x, mod x 5 /= 0]  -- odd numbers from 1-50 excluding those divisible by 5
+-- Multiple source lists can be used too; it will produce all combinations of
+-- values from each list.
+[(x, y) | x <- [1, 2], y <- [3, 4]]  -- [(1,3), (1,4), (2,3), (2,4)]
+
+-- Map, filter, and folds (otherwise known as reduce)
+map (*5) [1..5]  -- [5, 10, 15, 20, 25]
+filter (>=3) [1..5]  -- [3, 4, 5]
+foldl (/) 1 [1,2,5]  -- 0.1  (typical reduce function)
+foldr (/) 1 [1,2,5]  -- 2.5  (similar, but iterates in reverse order)
+
+
+-- -- Tuples! -- --
+
+-- Tuples are sequences of values that do not have to be of the same type.
+-- However, two tuples constituted of different types, or even tuples that have
+-- different lengths, are considered to be different types themselves.
+(5, 10)
+("hello", 12.4, False)
+-- Pairs, specifically, have a couple of functions for retrieving each value:
+fst (6, 4)  -- 6
+snd (1, 3)  -- 3
+-- zip works like similar functions in other languages, taking two lists and
+-- returning a list of pairs, until one of the two inputs runs out.
+zip [1, 2, 3] [4, 5, 6]  -- [(1, 4), (2, 5), (3, 6)]
+zip "abc", [1..] -- [('a', 1), ('b', 2), ('c', 3)]
