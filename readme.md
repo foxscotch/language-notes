@@ -1,6 +1,7 @@
 # language-notes
 
 These are the notes I've taken when learning a few languages in the past. Also not in the past. Like as in, currently.
+See also: [foxscotch/command-finder](https://github.com/foxscotch/command-finder).
 
 I do it both to help commit the things I learn to memory, and to serve as a quick reference if it's been a while since
 I've used a language. It's been pretty helpful, so idk maybe it'll be helpful to someone else one day?
