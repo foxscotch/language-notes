@@ -15,3 +15,5 @@ The languages included are:
 They're all a couple of years old, except Haskell, which I'm currently working with, but should generally still be
 accurate. I doubt much has changed about the things that I actually took notes on. They just won't have notes on any
 features that have been added since I took the notes.
+
+By the way, I use http://patorjk.com/software/taag/ for the rad lil language titles.
