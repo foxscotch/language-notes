@@ -17,3 +17,8 @@ accurate. I doubt much has changed about the things that I actually took notes o
 features that have been added since I took the notes.
 
 By the way, I use http://patorjk.com/software/taag/ for the rad lil language titles.
+
+The works included in this repository are licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 3.0 Unported License. To view a copy of
+this license, see the included license.txt file or visit
+http://creativecommons.org/licenses/by-nc-sa/3.0/.
