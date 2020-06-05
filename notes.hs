@@ -60,6 +60,11 @@ max 5 4        -- Returns the greater of its two arguments.
 max 4 2 + 1    -- Essentially (max 4 2) + 1, i.e. 5
 min 4 (2 + 1)  -- 3
 
+-- You can add type annotations when calling a function where the desired return
+-- type is unclear. In fact, this works as casting in general.
+read "16" :: Int  -- 16
+20 :: Float       -- 20.0
+
 -- Two-arg prefix functions can be surrounded by backticks to make them infix:
 12 `div` 6  -- 2
 
@@ -69,6 +74,16 @@ timesTwo 12  -- 24
 addTimesTwo x y = timesTwo (x + y)
 addTimesTwo 10 5  -- 30
 -- Function names can't begin with a capital letter, but they can contain '
+-- You can use type annotations when inference won't cut it. The items on the
+-- right side of :: are all of the arguments, in order, then the return type.
+timesTwo :: Int -> Int
+addTimesTwo :: Int -> Int -> Int
+-- More complex example:
+test :: (Int, [Char]) -> Int -> (Int, [Char])
+test (age, name) i = (age*i, name ++ " doubled")
+-- Type variables are like generics, such as in this reimplementation of fst:
+fst :: (a, b) -> a
+fst (a, b) = a
 
 
 -- -- Flow control! -- --
@@ -169,3 +184,11 @@ snd (1, 3)  -- 3
 -- returning a list of pairs, until one of the two inputs runs out.
 zip [1, 2, 3] [4, 5, 6]  -- [(1, 4), (2, 5), (3, 6)]
 zip "abc", [1..] -- [('a', 1), ('b', 2), ('c', 3)]
+
+
+-- -- Typeclasses! -- --
+
+-- Typeclasses are like interfaces. Eq, for instance, is a typeclass that
+-- describes types that can be tested for equality. There's also Ord, for types
+-- that can be ordered, Show for types that can be converted to strings, and
+-- Read for types that can be converted _from_ strings.
