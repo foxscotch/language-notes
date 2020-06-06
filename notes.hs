@@ -50,7 +50,9 @@ not True  -- False
 5 <= 8  -- True
 
 
--- -- Functions! -- --
+ ---        ---
+-- Functions! --
+ ---        ---
 
 -- Function calls consume the function arguments first, before anything else is
 -- done. If an argument needs some calculation to be done, you'll have to use
@@ -86,7 +88,9 @@ fst :: (a, b) -> a
 fst (a, b) = a
 
 
--- -- Flow control! -- --
+ ---           ---
+-- Flow control! --
+ ---           ---
 
 -- ifs are easy.
 if 5 > 4 then 6 else 3  -- 6
@@ -96,7 +100,9 @@ if 5 < 4
     else 3  -- 3
 
 
--- -- Lists! -- --
+ ---    ---
+-- Lists! --
+ ---    ---
 
 -- All normal lists using square brackets [] are homogenous, containing values
 -- of only a single type. Lists are, vitally, immutable.
@@ -170,7 +176,9 @@ foldl (/) 1 [1,2,5]  -- 0.1  (typical reduce function)
 foldr (/) 1 [1,2,5]  -- 2.5  (similar, but iterates in reverse order)
 
 
--- -- Tuples! -- --
+ ---     ---
+-- Tuples! --
+ ---     ---
 
 -- Tuples are sequences of values that do not have to be of the same type.
 -- However, two tuples constituted of different types, or even tuples that have
@@ -186,7 +194,9 @@ zip [1, 2, 3] [4, 5, 6]  -- [(1, 4), (2, 5), (3, 6)]
 zip "abc", [1..] -- [('a', 1), ('b', 2), ('c', 3)]
 
 
--- -- Typeclasses! -- --
+ ---          ---
+-- Typeclasses! --
+ ---          ---
 
 -- Typeclasses are like interfaces. Eq, for instance, is a typeclass that
 -- describes types that can be tested for equality. There's also Ord, for types
