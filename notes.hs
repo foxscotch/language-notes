@@ -80,12 +80,32 @@ addTimesTwo 10 5  -- 30
 -- right side of :: are all of the arguments, in order, then the return type.
 timesTwo :: Int -> Int
 addTimesTwo :: Int -> Int -> Int
--- More complex example:
+-- More complex example, showing some pattern matching:
 test :: (Int, [Char]) -> Int -> (Int, [Char])
 test (age, name) i = (age*i, name ++ " doubled")
 -- Type variables are like generics, such as in this reimplementation of fst:
 fst :: (a, b) -> a
 fst (a, b) = a
+
+-- Pattern matching can be used sorta like overloads to match specific inputs:
+oneOrTwo :: (Integral i) => i -> String  -- that part before the => defines typeclass constraints for the argument
+oneOrTwo 1 = "one"
+oneOrTwo 2 = "two"
+oneOrTwo i = "something else"
+-- If called with the argument 1 or 2, it will return the respective string, but
+-- if you call it with any other number, it returns "something else". The
+-- patterns are checked in order, and will use the first one that matches.
+
+-- Haskell is basically built for recursion.
+-- Laziness means no need for tail call optimization in the first place.
+factorial :: (Integral a) => a -> a
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+
+-- "As patterns" allow you to use the full object even when pattern matching:
+firstLetter :: String -> String
+firstLetter "" = "empty string"
+firstLetter full@(s:xs) = "first letter of " ++ full ++ " is " ++ [s]
 
 
  ---           ---
@@ -198,7 +218,13 @@ zip "abc", [1..] -- [('a', 1), ('b', 2), ('c', 3)]
 -- Typeclasses! --
  ---          ---
 
--- Typeclasses are like interfaces. Eq, for instance, is a typeclass that
--- describes types that can be tested for equality. There's also Ord, for types
--- that can be ordered, Show for types that can be converted to strings, and
--- Read for types that can be converted _from_ strings.
+-- Typeclasses are like interfaces. Here are some examples:
+Eq        -- describes types that can be tested for equality
+Ord       -- types that can be ordered
+Show      -- types that can be converted to strings
+Read      -- types that can be converted from strings.
+Enum      -- sequentially ordered types, for expressions like [1..5] or succ 'D'
+Bounded   -- types that have an upper and lower bound; maxBound and minBound return these bounds
+Num       -- generic number typeclass, includes Int, Integer, Float, and Double
+Integral  -- subset of Num that includes only Int and Integer whole numbers
+Floating  -- subset of Num that includes only floating-point number types
