@@ -107,10 +107,31 @@ firstLetter :: String -> String
 firstLetter "" = "empty string"
 firstLetter full@(s:xs) = "first letter of " ++ full ++ " is " ++ [s]
 
+-- Guards are somewhere between a switch and pattern matching. Pattern matching
+-- can also be used with guards.
+howBad :: (Floating a, Ord a) => a -> a -> String
+howBad spec actual
+    | diff <= not    = "not bad"
+    | diff <= little = "a little bad"
+    | diff <= pretty = "pretty bad"
+    | otherwise      = "really bad"  -- otherwise just evaluates to True
+    where diff = (abs (spec - actual)) / spec
+          (not, little, pretty) = (0.00, 0.10, 0.25)
+howBad 100 100   -- "not bad"
+howBad 100  95   -- "a little bad"
+howBad 100  25   -- "really bad"
+
 
  ---           ---
 -- Flow control! --
  ---           ---
+
+-- let allows you to bind variables to be visible in a single expression. Unlike
+-- where, from the function section, let is itself an expression.
+let x = 12 in x * 2  -- 24
+let next x = x + 1 in next 12  -- 13
+-- let can also be used in a list comprehension.
+[y | x <- [1..5], let y = x * 2]  -- [2, 4, 6, 8, 10]
 
 -- ifs are easy.
 if 5 > 4 then 6 else 3  -- 6
@@ -118,6 +139,12 @@ if 5 > 4 then 6 else 3  -- 6
 if 5 < 4
     then 6
     else 3  -- 3
+
+-- case expressions are familiar. However, it only works with pattern matching.
+-- The predicates can't be expressions.
+case 5 of 4 -> "four"
+          5 -> "five"
+          _ -> "idk"  -- "five"
 
 
  ---    ---
