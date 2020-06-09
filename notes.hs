@@ -12,6 +12,10 @@
      \/__/         \/__/         \/__/         \|__|         \/__/         \/__/     \/__/
 -}
 
+-- Licensed under CC BY-NC-SA 3.0
+-- https://creativecommons.org/licenses/by-nc-sa/3.0/
+-- Some code examples come from Learn You a Haskell for Great Good - http://learnyouahaskell.com/
+
 -- This is a single-line comment.
 
 
@@ -101,6 +105,14 @@ oneOrTwo i = "something else"
 factorial :: (Integral a) => a -> a
 factorial 0 = 1
 factorial n = n * factorial (n - 1)
+-- More complicated example implementation of maximum:
+maximum :: (Ord a) => [a] -> a
+maximum [] = error "maximum of empty list"
+maximum [x] = x
+maximum (x:xs)
+    | x > maxTail = x
+    | otherwise = maxTail
+    where maxTail = maximum xs
 
 -- "As patterns" allow you to use the full object even when pattern matching:
 firstLetter :: String -> String
