@@ -133,6 +133,14 @@ howBad 100 100   -- "not bad"
 howBad 100  95   -- "a little bad"
 howBad 100  25   -- "really bad"
 
+-- Recursive implementation of quicksort:
+quicksort :: (Ord a) => [a] -> [a]  
+quicksort [] = []  
+quicksort (x:xs) =   
+    let smallerSorted = quicksort [a | a <- xs, a <= x]  
+        biggerSorted = quicksort [a | a <- xs, a > x]  
+    in  smallerSorted ++ [x] ++ biggerSorted
+
 
  ---           ---
 -- Flow control! --
