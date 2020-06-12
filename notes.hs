@@ -275,3 +275,30 @@ Bounded   -- types that have an upper and lower bound; maxBound and minBound ret
 Num       -- generic number typeclass, includes Int, Integer, Float, and Double
 Integral  -- subset of Num that includes only Int and Integer whole numbers
 Floating  -- subset of Num that includes only floating-point number types
+
+
+ ---              ---              ---
+-- Currying and Partial Application! --
+ ---              ---              ---
+
+-- So: In Haskell, functions can technically only accept one argument. A
+-- function that appears to accept two arguments is actually a function that
+-- accepts one argument and returns a function that then accepts the second.
+-- This fact also means that we can partially apply functions, i.e. provide it
+-- with some arguments, to allow another function to provide the other(s). With
+-- infix functions specifically, you can use parens to partially apply either
+-- the first or second argument, depending on where you place it.
+
+-- A good example of this is with map/filter/reduce. The first argument is a
+-- function. In an earlier example, I used (*5) for a map call. That's a
+-- partially-applied function, with the second argument applied. So when map
+-- finished the application using the contents of the list, it's as if it's
+-- calling x*5 each time; however, from its perspective, it's just calling a
+-- regular single-argument function. The order of application isn't as useful
+-- there as you can imagine it might be with other functions like / or mod.
+
+-- Here's some simple examples:
+test x y z = (x, y, z)
+test 1 2 3      -- (1, 2, 3)
+((test 1) 2) 3  -- (1, 2, 3)
+(`test` 2) 1 3  -- (1, 2, 3)
