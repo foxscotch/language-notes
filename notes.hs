@@ -153,6 +153,8 @@ map (*5) [1..5]  -- [5, 10, 15, 20, 25]
 filter (>=3) [1..5]  -- [3, 4, 5]
 foldl (/) 1 [1,2,5]  -- 0.1  (typical reduce function)
 foldr (/) 1 [1,2,5]  -- 2.5  (similar, but iterates in reverse order)
+-- Note for foldr: the order of the function's argumenst are also reversed. The
+-- accumulator value is applied second, while in foldl, it's applied first.
 
 
  ---     ---
