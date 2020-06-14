@@ -54,94 +54,6 @@ not True  -- False
 5 <= 8  -- True
 
 
- ---        ---
--- Functions! --
- ---        ---
-
--- Function calls consume the function arguments first, before anything else is
--- done. If an argument needs some calculation to be done, you'll have to use
--- parentheses to group the operation into a single value.
-min 9 10       -- Returns the lesser of its two arguments.
-max 5 4        -- Returns the greater of its two arguments.
-max 4 2 + 1    -- Essentially (max 4 2) + 1, i.e. 5
-min 4 (2 + 1)  -- 3
-
--- You can add type annotations when calling a function where the desired return
--- type is unclear. In fact, this works as casting in general.
-read "16" :: Int  -- 16
-20 :: Float       -- 20.0
-
--- Two-arg prefix functions can be surrounded by backticks to make them infix:
-12 `div` 6  -- 2
-
--- Defining a function is pretty simple.
-timesTwo x = x * 2
-timesTwo 12  -- 24
-addTimesTwo x y = timesTwo (x + y)
-addTimesTwo 10 5  -- 30
--- Function names can't begin with a capital letter, but they can contain '
--- You can use type annotations when inference won't cut it. The items on the
--- right side of :: are all of the arguments, in order, then the return type.
-timesTwo :: Int -> Int
-addTimesTwo :: Int -> Int -> Int
--- More complex example, showing some pattern matching:
-test :: (Int, [Char]) -> Int -> (Int, [Char])
-test (age, name) i = (age*i, name ++ " doubled")
--- Type variables are like generics, such as in this reimplementation of fst:
-fst :: (a, b) -> a
-fst (a, b) = a
-
--- Pattern matching can be used sorta like overloads to match specific inputs:
-oneOrTwo :: (Integral i) => i -> String  -- that part before the => defines typeclass constraints for the argument
-oneOrTwo 1 = "one"
-oneOrTwo 2 = "two"
-oneOrTwo i = "something else"
--- If called with the argument 1 or 2, it will return the respective string, but
--- if you call it with any other number, it returns "something else". The
--- patterns are checked in order, and will use the first one that matches.
-
--- Haskell is basically built for recursion.
--- Laziness means no need for tail call optimization in the first place.
-factorial :: (Integral a) => a -> a
-factorial 0 = 1
-factorial n = n * factorial (n - 1)
--- More complicated example implementation of maximum:
-maximum :: (Ord a) => [a] -> a
-maximum [] = error "maximum of empty list"
-maximum [x] = x
-maximum (x:xs)
-    | x > maxTail = x
-    | otherwise = maxTail
-    where maxTail = maximum xs
-
--- "As patterns" allow you to use the full object even when pattern matching:
-firstLetter :: String -> String
-firstLetter "" = "empty string"
-firstLetter full@(s:xs) = "first letter of " ++ full ++ " is " ++ [s]
-
--- Guards are somewhere between a switch and pattern matching. Pattern matching
--- can also be used with guards.
-howBad :: (Floating a, Ord a) => a -> a -> String
-howBad spec actual
-    | diff <= not    = "not bad"
-    | diff <= little = "a little bad"
-    | diff <= pretty = "pretty bad"
-    | otherwise      = "really bad"  -- otherwise just evaluates to True
-    where diff = (abs (spec - actual)) / spec
-          (not, little, pretty) = (0.00, 0.10, 0.25)
-howBad 100 100   -- "not bad"
-howBad 100  95   -- "a little bad"
-howBad 100  25   -- "really bad"
-
--- Recursive implementation of quicksort:
-quicksort :: (Ord a) => [a] -> [a]
-quicksort [] = []
-quicksort (x:xs) =
-    let smallerSorted = quicksort [a | a <- xs, a <= x]
-        biggerSorted = quicksort [a | a <- xs, a > x]
-    in  smallerSorted ++ [x] ++ biggerSorted
-
-
  ---           ---
 -- Flow control! --
  ---           ---
@@ -277,9 +189,97 @@ Integral  -- subset of Num that includes only Int and Integer whole numbers
 Floating  -- subset of Num that includes only floating-point number types
 
 
- ---              ---              ---
--- Currying and Partial Application! --
- ---              ---              ---
+ ---        ---
+-- Functions! --
+ ---        ---
+
+-- Function calls consume the function arguments first, before anything else is
+-- done. If an argument needs some calculation to be done, you'll have to use
+-- parentheses to group the operation into a single value.
+min 9 10       -- Returns the lesser of its two arguments.
+max 5 4        -- Returns the greater of its two arguments.
+max 4 2 + 1    -- Essentially (max 4 2) + 1, i.e. 5
+min 4 (2 + 1)  -- 3
+
+-- You can add type annotations when calling a function where the desired return
+-- type is unclear. In fact, this works as casting in general.
+read "16" :: Int  -- 16
+20 :: Float       -- 20.0
+
+-- Two-arg prefix functions can be surrounded by backticks to make them infix:
+12 `div` 6  -- 2
+
+-- Defining a function is pretty simple.
+timesTwo x = x * 2
+timesTwo 12  -- 24
+addTimesTwo x y = timesTwo (x + y)
+addTimesTwo 10 5  -- 30
+-- Function names can't begin with a capital letter, but they can contain '
+-- You can use type annotations when inference won't cut it. The items on the
+-- right side of :: are all of the arguments, in order, then the return type.
+timesTwo :: Int -> Int
+addTimesTwo :: Int -> Int -> Int
+-- More complex example, showing some pattern matching:
+test :: (Int, [Char]) -> Int -> (Int, [Char])
+test (age, name) i = (age*i, name ++ " doubled")
+-- Type variables are like generics, such as in this reimplementation of fst:
+fst :: (a, b) -> a
+fst (a, b) = a
+
+-- Pattern matching can be used sorta like overloads to match specific inputs:
+oneOrTwo :: (Integral i) => i -> String  -- that part before the => defines typeclass constraints for the argument
+oneOrTwo 1 = "one"
+oneOrTwo 2 = "two"
+oneOrTwo i = "something else"
+-- If called with the argument 1 or 2, it will return the respective string, but
+-- if you call it with any other number, it returns "something else". The
+-- patterns are checked in order, and will use the first one that matches.
+
+-- Haskell is basically built for recursion.
+-- Laziness means no need for tail call optimization in the first place.
+factorial :: (Integral a) => a -> a
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+-- More complicated example implementation of maximum:
+maximum :: (Ord a) => [a] -> a
+maximum [] = error "maximum of empty list"
+maximum [x] = x
+maximum (x:xs)
+    | x > maxTail = x
+    | otherwise = maxTail
+    where maxTail = maximum xs
+
+-- "As patterns" allow you to use the full object even when pattern matching:
+firstLetter :: String -> String
+firstLetter "" = "empty string"
+firstLetter full@(s:xs) = "first letter of " ++ full ++ " is " ++ [s]
+
+-- Guards are somewhere between a switch and pattern matching. Pattern matching
+-- can also be used with guards.
+howBad :: (Floating a, Ord a) => a -> a -> String
+howBad spec actual
+    | diff <= not    = "not bad"
+    | diff <= little = "a little bad"
+    | diff <= pretty = "pretty bad"
+    | otherwise      = "really bad"  -- otherwise just evaluates to True
+    where diff = (abs (spec - actual)) / spec
+          (not, little, pretty) = (0.00, 0.10, 0.25)
+howBad 100 100   -- "not bad"
+howBad 100  95   -- "a little bad"
+howBad 100  25   -- "really bad"
+
+-- Recursive implementation of quicksort:
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+    let smallerSorted = quicksort [a | a <- xs, a <= x]
+        biggerSorted = quicksort [a | a <- xs, a > x]
+    in  smallerSorted ++ [x] ++ biggerSorted
+
+
+ ---                     ---
+-- Higher-Order Functions! --
+ ---                     ---
 
 -- So: In Haskell, functions can technically only accept one argument. A
 -- function that appears to accept two arguments is actually a function that
