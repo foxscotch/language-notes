@@ -148,14 +148,6 @@ replicate 3 7  -- [7, 7, 7]
 -- values from each list.
 [(x, y) | x <- [1, 2], y <- [3, 4]]  -- [(1,3), (1,4), (2,3), (2,4)]
 
--- Map, filter, and folds (otherwise known as reduce)
-map (*5) [1..5]  -- [5, 10, 15, 20, 25]
-filter (>=3) [1..5]  -- [3, 4, 5]
-foldl (/) 1 [1,2,5]  -- 0.1  (typical reduce function)
-foldr (/) 1 [1,2,5]  -- 2.5  (similar, but iterates in reverse order)
--- Note for foldr: the order of the function's argumenst are also reversed. The
--- accumulator value is applied second, while in foldl, it's applied first.
-
 
  ---     ---
 -- Tuples! --
@@ -299,8 +291,61 @@ quicksort (x:xs) =
 -- regular single-argument function. The order of application isn't as useful
 -- there as you can imagine it might be with other functions like / or mod.
 
--- Here's some simple examples:
+-- First I want to make note of the function application operator, which has
+-- value in being low-precendence. The following expressions are equivalent.
+sum (map (*2) [1..5])
+sum $ map (*2) [1..5]
+-- And we can do this:
+map ($2) (map (*) [1..5])  -- [2, 4, 6, 8, 10]
+
+-- Here's some simple examples of partial application.
 test x y z = (x, y, z)
 test 1 2 3      -- (1, 2, 3)
 ((test 1) 2) 3  -- (1, 2, 3)
 (`test` 2) 1 3  -- (1, 2, 3)
+testPartial y z = test 4
+testPartial 5 6  -- (4, 5, 6)
+
+-- Functions as arguments need parentheses when in type signatures.
+runTwice :: (a -> a) -> a -> a
+runTwice f v = f (f v)
+runTwice (subtract 2) 12  -- 8
+
+-- Lambda expressions can be used to define short functions inline.
+filter (\x -> and [x>2, x<6]) [1..10]  -- [3, 4, 5]
+foldl (\acc x -> acc + x) 0 [1..10]    -- sum [1..10]
+
+-- Function composition lets us avoid having to use lambdas for simple chains.
+-- . is defined as (f . g = \x -> f (g x))
+filter (\x -> not (even x)) [1..5]  -- [1, 3, 5]  (you could just use odd, but for example's sake)
+filter (not . even) [1..5]          -- [1, 3, 5]
+((*2) . (+2) . (/2)) 12  -- 16.0  (((12 / 2) + 2) * 2)
+
+-- Lists can contain functions.
+manyFunctions = map (+) [1..]  -- list of partially-applied functions, equivalent to [(1+), (2+)..]
+(manyFunctions !! 105) 2  -- 108  (i.e. 106 + 2)
+
+-- Map, filter, and folds (the last otherwise known as reduce) are probably the
+-- most important examples of higher-order functions.
+map (*5) [1..5]  -- [5, 10, 15, 20, 25]
+filter (>=3) [1..5]  -- [3, 4, 5]
+foldl (/) 1 [1,2,5]  -- 0.1  (typical reduce function)
+foldr (/) 1 [1,2,5]  -- 2.5  (similar, but iterates in reverse order)
+-- Note for foldr: the order of the function's arguments is also reversed. The
+-- accumulator value is applied second, while in foldl, it's applied first.
+
+-- There's also foldl1 and foldr1, which use the initial list item as the
+-- initial accumulator, rather than taking it as an argument.
+foldl1 (+) [1..5]  -- 15
+foldr1 (-) [1..5]  -- 3  (remember, the order of application is also swapped)
+
+-- scanl/scanr are essentially the same as foldl/foldr, but the return value is
+-- a list of ALL the values produced, including the initial accumulator value.
+-- The last/head respectively contain what foldl/foldr would normally return.
+scanl (/) 1 [1,2,5]  -- [1.0, 1.0, 0.5, 0.1]
+scanr (/) 1 [1,2,5]  -- [2.5, 0.4, 5.0, 1.0]
+-- Not gonna bother with examples for this but there's also scanl1/scanr1.
+
+-- Here are some other useful higher-order functions in Haskell:
+takeWhile (<5) [1..10]  -- [1, 2, 3, 4]
+dropWhile (<5) [1..10]  -- [5, 6, 7, 8, 9, 10]
