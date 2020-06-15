@@ -167,22 +167,6 @@ zip [1, 2, 3] [4, 5, 6]  -- [(1, 4), (2, 5), (3, 6)]
 zip "abc", [1..] -- [('a', 1), ('b', 2), ('c', 3)]
 
 
- ---          ---
--- Typeclasses! --
- ---          ---
-
--- Typeclasses are like interfaces. Here are some examples:
-Eq        -- describes types that can be tested for equality
-Ord       -- types that can be ordered
-Show      -- types that can be converted to strings
-Read      -- types that can be converted from strings.
-Enum      -- sequentially ordered types, for expressions like [1..5] or succ 'D'
-Bounded   -- types that have an upper and lower bound; maxBound and minBound return these bounds
-Num       -- generic number typeclass, includes Int, Integer, Float, and Double
-Integral  -- subset of Num that includes only Int and Integer whole numbers
-Floating  -- subset of Num that includes only floating-point number types
-
-
  ---        ---
 -- Functions! --
  ---        ---
@@ -383,3 +367,19 @@ module Something.Test (
     testAnotherThing
 ) where
 -- Then the definitions. In this case, the filename is "./Something/Test.hs".
+
+
+ ---          ---
+-- Typeclasses! --
+ ---          ---
+
+-- Typeclasses are like interfaces. Here are some examples:
+Eq        -- describes types that can be tested for equality
+Ord       -- types that can be ordered
+Show      -- types that can be converted to strings
+Read      -- types that can be converted from strings.
+Enum      -- sequentially ordered types, for expressions like [1..5] or succ 'D'
+Bounded   -- types that have an upper and lower bound; maxBound and minBound return these bounds
+Num       -- generic number typeclass, includes Int, Integer, Float, and Double
+Integral  -- subset of Num that includes only Int and Integer whole numbers
+Floating  -- subset of Num that includes only floating-point number types
