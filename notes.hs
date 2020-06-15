@@ -349,3 +349,37 @@ scanr (/) 1 [1,2,5]  -- [2.5, 0.4, 5.0, 1.0]
 -- Here are some other useful higher-order functions in Haskell:
 takeWhile (<5) [1..10]  -- [1, 2, 3, 4]
 dropWhile (<5) [1..10]  -- [5, 6, 7, 8, 9, 10]
+
+
+ ---      ---
+-- Modules! --
+ ---      ---
+
+ -- Standard library modules: https://downloads.haskell.org/~ghc/latest/docs/html/libraries/
+ -- Search engine for Haskell package APIs: https://hoogle.haskell.org/
+
+-- Modules must be imported before anything else is defined. All of the defined
+-- names in the module are brought into the importing file's global scope.
+import Data.List
+import Data.List (nub)  -- Import only nub from Data.List
+import Data.List hiding (nub)  -- Import everything from Data.List except nub
+import qualified Data.List  -- Import everything from Data.List, but members must be accessed like Data.List.nub
+import qualified Data.List as L  -- Same as above, but you'll use L.nub for access
+:m + Data.List  -- This is just for GHCi.
+
+-- Defining modules is only a little bit strange:
+module Something (
+    doesSomething,
+    doesAnotherThing
+) where
+-- Then you simply define doesSomething and doesAnotherThing like normal.
+-- The name of the file should be the name of the module plus ".hs", and in
+-- order to import it with "import Something" the file needs to be in the same
+-- directory as the calling code.
+
+-- Modules can also be defined heirarchically.
+module Something.Test (
+    testSomething,
+    testAnotherThing
+) where
+-- Then the definitions. In this case, the filename is "./Something/Test.hs".
