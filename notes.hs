@@ -364,14 +364,32 @@ module Something (
 -- Modules can also be defined heirarchically.
 module Something.Test (
     testSomething,
-    testAnotherThing
+    testAnotherThing,
+    TestType(..)  -- Export all data constructors of a type named TestType; more on types and data constructors later
 ) where
 -- Then the definitions. In this case, the filename is "./Something/Test.hs".
 
 
- ---          ---
--- Typeclasses! --
- ---          ---
+ ---                    ---
+-- Types and Typeclasses! --
+ ---                    ---
+
+-- Types are used to define a particular format for data. They can have
+-- constructors, which define multiple values to be used.
+data Bool = True | False  -- a definition for the Bool typeclass, which can be True OR False
+data Coordinate = Coordinate Float Float  -- a definition for a coordinate type with a data constructor that takes two floats
+c = Coordinate 10 5  -- definition of a Coordinate instance
+getX :: Coordinate -> Float
+getX (Coordinate x y) = x  -- function that returns the x value of a Coordinate
+
+-- A type can also have multiple data constructors. It's important to understand
+-- that a data constructor itself is not a type; it can not be used in a type
+-- signature. In the following example, the type merely has the same name as one
+-- of the data constructors. Which might be bad, conventionally, idk.
+data Coord = Coord Float Float | Coord3d Float Float Float
+getY :: Coord -> Float
+getY (Coord x y) = y
+getY (Coord3d x y z) = y
 
 -- Typeclasses are like interfaces. Here are some examples:
 Eq        -- describes types that can be tested for equality
@@ -383,3 +401,8 @@ Bounded   -- types that have an upper and lower bound; maxBound and minBound ret
 Num       -- generic number typeclass, includes Int, Integer, Float, and Double
 Integral  -- subset of Num that includes only Int and Integer whole numbers
 Floating  -- subset of Num that includes only floating-point number types
+
+-- Deriving a type from a typeclass uses simple syntax.
+data Person = Person String Int deriving (Show)  -- deriving from Show lets us easily convert types to strings
+show (Person "Fox" 22)  -- "Person \"Fox\" 22"
+-- More about typeclass derivation later?
