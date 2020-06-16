@@ -391,6 +391,21 @@ getY :: Coord -> Float
 getY (Coord x y) = y
 getY (Coord3d x y z) = y
 
+-- "Record syntax" allows you to define data and accessors in a single place.
+data Person = {
+    firstName :: String,
+    lasttName :: String,
+    age :: Int
+}
+lastName (Person "Cutie", "Pie", 314)  -- "Pie"
+-- I feel like I should also mention that LYAH styles this more like so:
+data Person = { firstName :: String
+              , lasttName :: String
+              , age :: Int
+              }
+-- Not too sure about that. I'll have to see if that's conventional Haskell or
+-- just the book's author's preference.
+
 -- Typeclasses are like interfaces. Here are some examples:
 Eq        -- describes types that can be tested for equality
 Ord       -- types that can be ordered
