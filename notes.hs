@@ -391,13 +391,15 @@ getY :: Coord -> Float
 getY (Coord x y) = y
 getY (Coord3d x y z) = y
 
--- "Record syntax" allows you to define data and accessors in a single place.
+-- "Record syntax" allows you to define data and accessors in a single place,
+-- and also allows for a more explicit construction syntax.
 data Person = {
     firstName :: String,
     lasttName :: String,
     age :: Int
 }
 lastName (Person "Cutie", "Pie", 314)  -- "Pie"
+age (Person {firstName="Sakamoto", lastName="Shinonome", age=20})  -- 20  (in cat years)
 -- I feel like I should also mention that LYAH styles this more like so:
 data Person = { firstName :: String
               , lasttName :: String
@@ -405,6 +407,11 @@ data Person = { firstName :: String
               }
 -- Not too sure about that. I'll have to see if that's conventional Haskell or
 -- just the book's author's preference.
+
+-- Type constructors also let you use generics for types. Maybe, for example,
+-- would be implemented like this:
+data Maybe a = Nothing | Just a
+exampleFunction :: Int -> Maybe Int
 
 -- Typeclasses are like interfaces. Here are some examples:
 Eq        -- describes types that can be tested for equality
@@ -417,7 +424,29 @@ Num       -- generic number typeclass, includes Int, Integer, Float, and Double
 Integral  -- subset of Num that includes only Int and Integer whole numbers
 Floating  -- subset of Num that includes only floating-point number types
 
--- Deriving a type from a typeclass uses simple syntax.
+-- Deriving (essentially, implementing) a type from a typeclass uses simple syntax.
 data Person = Person String Int deriving (Show)  -- deriving from Show lets us easily convert types to strings
 show (Person "Fox" 22)  -- "Person \"Fox\" 22"
--- More about typeclass derivation later?
+-- In some cases, merely deriving the type is enough to make it work, with some
+-- restrictions. This applies to Show, Read, Eq, Ord, Enum, and Bounded.
+
+-- When deriving Eq, for it to automatically work, all field types must also be
+-- Eq. For Ord, Bounded, and Enum, it's only automatic for types that consist of
+-- a list of data constructors. The following example is essentially a bounded
+-- enum that we can compare, show, read, and enumerate.
+data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun
+    deriving (Show, Read, Eq, Ord, Enum, Bounded)
+Thu > Tue        -- True
+[Mon..Wed]       -- [Mon, Tue, Wed]
+maxBound :: Day  -- Sun
+
+-- The type keyword (misleadingly, perhaps) allows us to define type aliases.
+-- The definition of the String type, for example, is:
+type String = [Char]
+-- Apparently people use this to give type signatures more meaningful names.
+type Name = String
+type Age = Int
+type Person = [(Name, Age)]
+-- Type aliases (or synonyms) can also use parameters and be partially applied.
+type AssocList k v = [(k, v)]
+type IntMap = Map Int  -- Equivalent to type IntMap v = Map Int v
