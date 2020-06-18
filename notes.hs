@@ -440,6 +440,17 @@ Thu > Tue        -- True
 [Mon..Wed]       -- [Mon, Tue, Wed]
 maxBound :: Day  -- Sun
 
+-- We can define typeclasses with class, like for this implementation of Eq:
+class Eq a where
+    (==) :: a -> a -> Bool
+    (/=) :: a -> a -> Bool
+    x == y = not (x /= y)
+    x /= y = not (x == y)
+
+-- We can then implement this interface by deriving it, or manually like this:
+data State = Off | Idle | Active
+instance Eq Cat where
+
 -- The type keyword (misleadingly, perhaps) allows us to define type aliases.
 -- The definition of the String type, for example, is:
 type String = [Char]
