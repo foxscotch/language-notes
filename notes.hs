@@ -454,6 +454,22 @@ instance Eq State where
     Idle == Idle = True
     Active == Active = True
     _ == _ = False
+instance Show State where
+    show Off = "Off!"
+    show Idle = "Idle!"
+    show Active = "Active!"
+
+-- Subclassing a typeclass is done like so:
+class (Eq a) => Ord a where
+    ...
+
+-- And here's a more complicated example of the Eq implementation of Maybe. The
+-- typeclass constraint assures that Maybe is only considered to be a member of
+-- Eq when the variable used with Maybe also is.
+instance (Eq m) => Eq (Maybe m) where
+    Just x == Just y = x == y
+    Nothing == Nothing = True
+    _ == _ = False
 
 -- The type keyword (misleadingly, perhaps) allows us to define type aliases.
 -- The definition of the String type, for example, is:
