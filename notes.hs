@@ -445,11 +445,15 @@ class Eq a where
     (==) :: a -> a -> Bool
     (/=) :: a -> a -> Bool
     x == y = not (x /= y)
-    x /= y = not (x == y)
+    x /= y = not (x == y)  -- defining that like this means you only really need to implement one of the two
 
 -- We can then implement this interface by deriving it, or manually like this:
 data State = Off | Idle | Active
-instance Eq Cat where
+instance Eq State where
+    Off == Off = True
+    Idle == Idle = True
+    Active == Active = True
+    _ == _ = False
 
 -- The type keyword (misleadingly, perhaps) allows us to define type aliases.
 -- The definition of the String type, for example, is:
