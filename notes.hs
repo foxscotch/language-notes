@@ -481,3 +481,8 @@ type Person = [(Name, Age)]
 -- Type aliases (or synonyms) can also use parameters and be partially applied.
 type AssocList k v = [(k, v)]
 type IntMap = Map Int  -- Equivalent to type IntMap v = Map Int v
+
+-- A "kind" is the type of a type. The * symbol basically means "concrete type".
+Int :: *
+Maybe :: * -> *
+Maybe Int :: *
