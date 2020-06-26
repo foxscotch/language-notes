@@ -53,6 +53,10 @@ not True  -- False
 5 >= 2  -- True
 5 <= 8  -- True
 
+-- There are two operations one might compare to assignment:
+x = 12  -- this is used to define names in general, including functions
+y <- getLine  -- this is used to bind the result of an I/O operation to a name
+
 
  ---           ---
 -- Flow control! --
@@ -486,3 +490,22 @@ type IntMap = Map Int  -- Equivalent to type IntMap v = Map Int v
 Int :: *
 Maybe :: * -> *
 Maybe Int :: *
+
+
+ ---            ---
+-- Input / Output --
+ ---            ---
+
+ -- I/O functions in Haskell often return a type of "IO ()". These values can
+ -- contain information about the result of the operation. The empty tuple will
+ -- often be replaced by a more useful type, such as IO String for getLine.
+putStrLn "hello!"  -- prints the string "hello!"
+
+-- Using do, we can perform multiple I/O actions in a row.
+do
+    putStrLn "ur name.... hand it over"
+    name <- getLine
+    putStrLn (name ++ "is a nice name")
+
+-- Because of the I/O return types, we can't do something like this.
+greeting = "hewwo " ++ getLine  -- that's a type error
