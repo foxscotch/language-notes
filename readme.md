@@ -30,3 +30,10 @@ The works included in this repository are licensed under the Creative Commons
 Attribution-NonCommercial-ShareAlike 3.0 Unported License. To view a copy of
 this license, see the included license.txt file or visit
 http://creativecommons.org/licenses/by-nc-sa/3.0/.
+
+If you're curious about the decision to use a CC license, it's because most of
+these files are really primarily prose. Furthermore, none of them can really be
+run as a piece of "software", they will all cause an exception or compiler error
+almost immediately. The reason for this specific choice is primarily because
+Learn You a Haskell, which a few of the snippets in the Haskell notes come from,
+uses it. It's just easier to use it for the whole thing at that point.
