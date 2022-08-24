@@ -16,6 +16,7 @@ The languages included are:
 - Java
 - Ruby
 - Haskell
+- Elixir
 
 They're all a couple of years old, except Elixir, which I'm currently working
 with, but should generally still be accurate. I doubt much has changed about the
