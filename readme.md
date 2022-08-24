@@ -14,6 +14,7 @@ The languages included are:
 - Lua
 - C
 - Java
+- Ruby
 - Haskell
 
 They're all a couple of years old, except Elixir, which I'm currently working
