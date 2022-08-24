@@ -4,12 +4,16 @@
 ▓██ ░▄█ ▒▓██  ▒██░▒██▒ ▄██▒██ ██░
 ▒██▀▀█▄  ▓▓█  ░██░▒██░█▀  ░ ▐██▓░
 ░██▓ ▒██▒▒▒█████▓ ░▓█  ▀█▓░ ██▒▓░
-░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ░▒▓███▀▒ ██▒▒▒ 
-  ░▒ ░ ▒░░░▒░ ░ ░ ▒░▒   ░▓██ ░▒░ 
-  ░░   ░  ░░░ ░ ░  ░    ░▒ ▒ ░░  
-   ░        ░      ░     ░ ░     
-                        ░░ ░     
+░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ░▒▓███▀▒ ██▒▒▒
+  ░▒ ░ ▒░░░▒░ ░ ░ ▒░▒   ░▓██ ░▒░
+  ░░   ░  ░░░ ░ ░  ░    ░▒ ▒ ░░
+   ░        ░      ░     ░ ░
+                        ░░ ░
 =end
+
+# Licensed under CC BY-NC-SA 3.0
+# See license.txt or https://creativecommons.org/licenses/by-nc-sa/3.0/
+
 
 # Single-line comment.
 
@@ -32,7 +36,7 @@ spicy = not (sour || sweet)  # false
 # current value is false or nil.
 a = false
 b = true
-a ||= 
+a ||=
 
 # Calling methods on objects is done as you'd expect; although the parentheses
 # are optional if you don't need them.

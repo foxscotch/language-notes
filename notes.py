@@ -7,6 +7,10 @@
 #  |___|      |___|    |___|  |__| |__||_______||_|  |__|
 #
 
+# Licensed under CC BY-NC-SA 3.0
+# See license.txt or https://creativecommons.org/licenses/by-nc-sa/3.0/
+
+
 # Introduction
 # 
 # This is Python. A weird, curly-bracketless programming language. It's named after Monty Python, not the genre of snake.

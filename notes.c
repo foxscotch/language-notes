@@ -1,15 +1,19 @@
-/*                      
-        ,o888888o.    
-       8888     `88.  
-    ,8 8888       `8. 
-    88 8888           
-    88 8888           
-    88 8888           
-    88 8888           
-    `8 8888       .8' 
-       8888     ,88'  
-        `8888888P'    
+/*
+        ,o888888o.
+       8888     `88.
+    ,8 8888       `8.
+    88 8888
+    88 8888
+    88 8888
+    88 8888
+    `8 8888       .8'
+       8888     ,88'
+        `8888888P'
 */
+
+// Licensed under CC BY-NC-SA 3.0
+// See license.txt or https://creativecommons.org/licenses/by-nc-sa/3.0/
+
 
 // DO NOT TRY TO COMPILE THIS FILE. it would be entirely pointless to even attempt it
 
@@ -183,7 +187,7 @@ int main(void) {
 	float f = getPositiveFloat();
 	int i = convertToCents(f);
 	countChange(i);
-	giveDetail();	
+	giveDetail();
 }
 
 /**END**CHANGE**/

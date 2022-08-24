@@ -13,6 +13,10 @@
       `-'  `--'  `--'  `"
 ]]
 
+-- Licensed under CC BY-NC-SA 3.0
+-- See license.txt or https://creativecommons.org/licenses/by-nc-sa/3.0/
+
+
 -- This is a single-line comment.
 
 -- printing to console

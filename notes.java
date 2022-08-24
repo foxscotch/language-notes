@@ -1,16 +1,19 @@
-/*                                                      
- *              _____        _____     _______    ______    _____         
- *             |\    \_    /      |_   \      |  |      | /      |_       
- *             \ \     \  /         \   |     /  /     /|/         \      
- *              \|      ||     /\    \  |\    \  \    |/|     /\    \     
- *               |      ||    |  |    \ \ \    \ |    | |    |  |    \    
- *       ______  |      ||     \/      \ \|     \|    | |     \/      \   
- *      /     / /      /||\      /\     \ |\         /| |\      /\     \  
- *     |      |/______/ || \_____\ \_____\| \_______/ | | \_____\ \_____\ 
- *     |\_____\      | / | |     | |     | \ |     | /  | |     | |     | 
- *     | |     |_____|/   \|_____|\|_____|  \|_____|/    \|_____|\|_____| 
- *      \|_____|                                                          
+/*
+ *              _____        _____     _______    ______    _____
+ *             |\    \_    /      |_   \      |  |      | /      |_
+ *             \ \     \  /         \   |     /  /     /|/         \
+ *              \|      ||     /\    \  |\    \  \    |/|     /\    \
+ *               |      ||    |  |    \ \ \    \ |    | |    |  |    \
+ *       ______  |      ||     \/      \ \|     \|    | |     \/      \
+ *      /     / /      /||\      /\     \ |\         /| |\      /\     \
+ *     |      |/______/ || \_____\ \_____\| \_______/ | | \_____\ \_____\
+ *     |\_____\      | / | |     | |     | \ |     | /  | |     | |     |
+ *     | |     |_____|/   \|_____|\|_____|  \|_____|/    \|_____|\|_____|
+ *      \|_____|
  */
+
+// Licensed under CC BY-NC-SA 3.0
+// See license.txt or https://creativecommons.org/licenses/by-nc-sa/3.0/
 
 
 // ╔════════════╗
@@ -101,7 +104,7 @@ true || false  // == true
 // no modifier |  y    |    y    |    n     |   n
 // ————————————+———————+—————————+——————————+———————
 // private     |  y    |    n    |    n     |   n
-// 
+//
 // y: accessible
 // n: not accessible
 
@@ -184,30 +187,30 @@ class Person {
     // Here are some attributes/properties/whatever you wanna call them.
     private int age;
     private String name;
-    
+
     // This here is the constructor.
     public Person(int personAge, String personName) {
         age = personAge;
         name = personName;
     }
-    
+
     // A getter.
     int getAge() {
         return age;
     }
-    
+
     // A setter.
     void setAge(newAge) {
         age = newAge;
     }
-    
+
     String getName() {
     	return name;
     }
     void changeName(String newName) {
     	name = newName;
     }
-    
+
     // Here's the main method. I don't get why this is how Java works, but w/e.
     public static void main(String[] args) {
         // Creates an instance of Person.
@@ -282,21 +285,21 @@ public class GetWebPage {
 		URL url = new URL("http://master2.blockland.us/");
 		// Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888));
         // ^ That commented line is to proxy the request through Fiddler.
-		
+
 		HttpURLConnection con = (HttpURLConnection) url.openConnection(/*proxy*/);
 		con.setRequestProperty("User-Agent", "Test");
         // ^ That line changes the user agent so CloudFlare won't block it.
-		
+
 		System.out.println("Status code: " + con.getResponseCode());
 		System.out.println("Method: " + con.getRequestMethod());
 		System.out.println("Finished");
-		
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inLine;
 		while ((inLine = in.readLine()) != null) {
 			System.out.println(inLine);
 		}
-		
+
 		in.close();
 	}
 }
@@ -307,9 +310,9 @@ public class GetWebPage {
 public class TimeDifference {
 	public static void main(String[] args) {
 		double originalTime = System.nanoTime() / 1000000000.0;
-		
+
 		// Do stuff here.
-		
+
 		double newTime = System.nanoTime() / 1000000000.0;
 		double difference = newTime - originalTime;
 		System.out.print(difference + " seconds");
@@ -325,23 +328,23 @@ public class MDArrayList {
 		ArrayList<Integer> innerList1 = new ArrayList<Integer>();
 		ArrayList<Integer> innerList2 = new ArrayList<Integer>();
 		ArrayList<Integer> innerList3 = new ArrayList<Integer>();
-		
+
 		doubleList.add(innerList1);
 		doubleList.add(innerList2);
 		doubleList.add(innerList3);
-		
+
 		innerList1.add(1);
 		innerList1.add(2);
 		innerList1.add(3);
-		
+
 		innerList2.add(4);
 		innerList2.add(5);
 		innerList2.add(6);
-		
+
 		innerList3.add(7);
 		innerList3.add(8);
 		innerList3.add(9);
-		
+
 		System.out.println(doubleList);  // [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 	}
 }
@@ -352,19 +355,19 @@ public class MDArrayList {
 public class MDArray {
 	public static void main(String[] args) {
 		Integer[][] doubleList = new Integer[3][3];
-		
+
 		doubleList[0][0] = 1;
 		doubleList[0][1] = 2;
 		doubleList[0][2] = 3;
-		
+
 		doubleList[1][0] = 4;
 		doubleList[1][1] = 5;
 		doubleList[1][2] = 6;
-		
+
 		doubleList[2][0] = 7;
 		doubleList[2][1] = 8;
 		doubleList[2][2] = 9;
-		
+
 		/* Previous code, before coming across Arrays.deepToString()
 
 			System.out.print("[");
@@ -376,9 +379,9 @@ public class MDArray {
 				System.out.print("],");
 			}
 			System.out.print("]");
-			
+
 		*/
-		
+
 		System.out.println(Arrays.deepToString(doubleList));
 	}
 }
