@@ -20,10 +20,65 @@
 
 # This is a single-line comment.
 
-# Simple arithmetic and comparison operators are exactly how you'd expect.
-# Most of the value types are also pretty predictable. One thing to note, however, is that the basic list type is a
-# linked list, as is typical with functional languages. Atoms are what symbols are called, and they're also kind of
-# similar in usage to Ruby's symbols, as far as names and stuff like that go. More later.
+# Simple arithmetic and comparison operators are pretty much what you'd expect. The only exception is that it has strict
+# (===, !==) and "value" (==, !=) equality operators. E.g., 1 === 1.0 is false, 1 == 1.0 is true.
+
+########################
+### Basic Data Types ###
+########################
+
+# Strings are strings.
+"hello world"
+"hello #{name}"
+"fox" <> "scotch" = "foxscotch"
+
+# Tuples are pretty much what you would expect. Often used like `Maybe` or `Option` in certain other languages.
+{1, 2}
+{:ok, 100}
+{:error, :enoent}
+
+# You've already seen a good deal of list examples by now, but here's one more. Remember that they're linked lists.
+[1, 2, 3, 4, 5]
+
+# Basic list operations
+# Concatenation; result = [1, 2, 4, 5]
+[1, 2] ++ [4, 5]
+# Difference; result = [1, 4]
+[1, 2, 3, 4] -- [3, 2]
+# Membership check; result = true
+3 in [1, 3, 5]
+
+# Maps are also pretty normal in terms of syntax, just prefix them with a %.
+a = %{name: "Fox", gay: true}
+%{"non-atom-key" => "uwu"}
+a[:name]
+
+# Maps have a cool feature that allows you to use dot-access if the keys are atoms.
+m = %{name: "Fox"}
+m.name
+
+# There's this concept of "keyword lists", which are really just a particular format of lists of pair tuples, with a
+# special shortcut for making them and a module (Keyword) for working with them. The following examples are equivalent:
+[name: "Fox", gay: true]
+[{:name, "Fox"}, {:gay, true}]
+
+# In practice I think these are seldom used for any purpose other than extra arguments at the end of a function call,
+# like Ruby's convention of using maps for the same thing. They even include some sugar for it; these are equivalent:
+DB.save(record, some: "extra", arguments: "here")
+Db.save(record, [{:some, "extra"}, {:arguments, "here"}])
+
+# There's even a binary data type, for some reason.
+<<255, 0, 85>>
+# You can customize the bit width of each field.
+<<1::size(1), 3::size(2), 3::size(2), 7::size(3)>>
+
+# Date and Time literals. The brackets can be replaced with one of a few options, but we'll get into that later with sigils.
+~D[2022-01-01]
+~T[05:15:00]
+~T[16:30:45.876]
+
+# RegEx literals. Elixir uses PCRE. There are a few modifier options, which you can see with `h Regex`.
+~r/Chapter \d+/i
 
 ########################
 ### Pattern Matching ###
@@ -55,18 +110,6 @@ a = 1
 # The value of a variable can also be used in matching, with the "pin" operator: ^
 a = 12
 [1, ^a, 3] = [1, 12, 3]
-
-###################
-### Basic Types ###
-###################
-
-# Date and Time literals. The brackets can be replaced with one of a few options, but we'll get into that later with sigils.
-~D[2022-01-01]
-~T[05:15:00]
-~T[16:30:45.876]
-
-# RegEx literals. Elixir uses PCRE. There are a few modifier options, which you can see with `h Regex`.
-~r/Chapter \d+/i
 
 ################
 ### Examples ###
