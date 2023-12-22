@@ -111,6 +111,36 @@ a = 1
 a = 12
 [1, ^a, 3] = [1, 12, 3]
 
+###############
+### Structs ###
+###############
+
+# Structs are special modules whose body starts with a particular macro call.
+defmodule Profile do
+  defstruct display_name: "", public: true
+end
+
+defmodule User do
+  defstruct username: "", superuser: false, profile: %Profile{}
+
+  def hello(%User{username: username}), do: "Hello, #{username}"
+end
+
+# They are created, accessed, and updated just like maps; in fact they _are_ maps.
+u = %User{username: "foxscotch", superuser: true, profile: %Profile{display_name: "Foxscotch"}}
+u.username
+u.profile.display_name
+u2 = %User{u | username: "nobody"}
+
+# Elixir has some cool functions (a macro in this case) that let us more easily update nested values in maps/structs.
+# Complex version of changing the user's display name, just for comparison:
+updated_user = %User(u | profile: %Profile{u.profile | display_name: "Foxscotch IV"})
+# Simple:
+updated_user = put_in(u.profile.display_name, "Foxscotch XIV")
+# update_in allows us to use a function to set the new value (new display name will be "King Foxscotch XIV")
+updated_user = update_in(u.profile.display_name, &("King " <> &1))
+
+
 ################
 ### Examples ###
 ################
@@ -123,7 +153,7 @@ defmodule Examples do
 
   @doc """
   Appends m to the end of n.
-  
+
   iex> Examples.append([1, 2, 3], [4, 5, 6])
   [1, 2, 3, 4, 5, 6]
   """
