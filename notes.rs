@@ -8,7 +8,6 @@
 
 
 ////-- THE BASICS --////
-//#region
 
 // this is a comment, which is apparently the idiomatically preferred sort
 
@@ -58,11 +57,9 @@ println!("The number twelve can be written as {}.", 12);
 let number = 32;
 println!("Thirty-two, on the other hand, would be {number}.");
 
-//#endregion
 
 
 ////-- STATEMENTS AND EXPRESSIONS --////
-//#region
 
 // another thing to remember is what statements and expressions are. they're
 // basically the same thing as in every language. expressions return a value,
@@ -85,11 +82,9 @@ let b = {
     12 + 8;
 }
 
-//#endregion
 
 
 ////-- FUNCTIONS --////
-//#region
 
 // familiarly, a main function is required for a program to run
 fn main() {
@@ -120,11 +115,9 @@ fn add_ten(n: i32) -> i32 {
     return n + 10;
 }
 
-//#endregion
 
 
 ////-- DATA TYPES --////
-//#region
 
 // data types are thankfully consistent in all environments
 
@@ -142,11 +135,9 @@ fn add_ten(n: i32) -> i32 {
 // all primitive types are defined in the standard library:
 // https://doc.rust-lang.org/std/index.html
 
-//#endregion
 
 
 ////-- TUPLES --////
-//#region
 
 // tuples, like in other languages, are sequential collections of values that
 // may be of different types. the tuple itself, however, has a single type: a
@@ -167,11 +158,9 @@ tup.1 = 5.8;  // tup == (200, 5.8, 4)
 // cases written as `()`. expressions that don't return another value implicitly
 // return the unit value. the unit type is the equivalent of void in C
 
-//#endregion
 
 
 ////-- ARRAYS --////
-//#region
 
 // arrays are like C arrays; all one type, fixed-length. syntax is reasonably
 // familiar to other languages, although the type specification is a bit new
@@ -187,11 +176,9 @@ b[1] = 12;  // b == [5, 12, 3, 2, 1]
 // if you attempt to access an index that is not within the bounds of the array,
 // Rust panics; i.e., crashes at runtime
 
-//#endregion
 
 
 ////-- MATH --////
-//#region
 
 // basic math syntax
 12 + 12;
@@ -212,11 +199,9 @@ saturating_sub()   // returns value at either end of range rather than overflow
 // even more integer methods can be found here:
 // https://doc.rust-lang.org/std/primitive.u32.html
 
-//#endregion
 
 
 ////-- CONTROL FLOW --////
-//#region
 
 // the most basic type: if expressions. that's right, EXPRESSIONS
 let x = 12;
@@ -275,10 +260,3 @@ for element in a {
 for element in (1..4) {
     // consecutively, `element == i` where i is 1 through 3; end value excluded
 }
-
-//#endregion
-
-
-////-- TEMPLATE --////
-//#region
-//#endregion
