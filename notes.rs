@@ -292,3 +292,100 @@ for element in a {
 for element in (1..4) {
     // consecutively, `element == i` where i is 1 through 3; end value excluded
 }
+
+
+////-- OWNERSHIP --////
+
+// Rust's ownership feature is how it gets its memory safety and avoids
+// requiring garbage collection. it is a vital concept to understand when
+// writing Rust code
+
+// I already understand the basics of how memory works, so I'm not going to
+// cover that here!! just read that chapter of the book again if needed:
+// https://rust-book.cs.brown.edu/ch04-01-what-is-ownership.html
+
+// one important detail I will note is that assigning variables copies the value
+// of the assigned variable into the memory slot for the new one. this may seem
+// obvious, and might even be true of C idk, but it's good to remember given
+// that I spend most of my time with JS, Ruby, Python, etc. see this example:
+let a = [0; 1_000_000];
+let b = a;
+// this gives us two separate copies of the array, using memory for all 2
+// million elements in the array!!
+
+// so, to let us pass data around without copying all of the memory for the
+// values, Rust, like C, has pointers. instead of malloc (et. al.), Rust
+// provides the Box construct, which allocates data on the heap
+let a = Box::new([0; 1_000_000]);
+let b = a;
+// this will only allocate the array once. the value of a, itself, is a pointer
+// to that data, and so is b. furthermore, after assignment to b, the value is
+// no longer accessible from a, because it has been _moved_... hmmm...
+
+// Rust doesn't allow you to manually free heap memory like C does. instead, a
+// heap allocation is freed automatically when its "owner" is freed from the
+// stack. in the previous example, ownership of the Box was transferred to b
+// upon its assignment. to maintain safety, data can not be accessed from a
+// variable that does not own it
+
+// operations that require resizing a heap allocation will allocate an entirely
+// new block of memory for the new size and free the old one, which helps to
+// understand this rule preventing you from accessing "moved" data. assignment
+// within a function moves ownership, as previously established, but so does
+// passing a variable into a function call. the return value of the function
+// will in turn be moved to wherever it's assigned in the caller
+
+// this more involved example from the book illustrates this behavior
+fn main() {
+    let first = String::from("Ferris");
+    let full = add_suffix(first);
+    println!("{full}");
+}
+
+fn add_suffix(mut name: String) -> String {
+    name.push_str(" Jr.");
+    name
+}
+// at the end of main, first is no longer accessible, as ownership was passed to
+// the add_suffix function. add_suffix allocates a new block of heap memory with
+// the original "Ferris" concatenated with " Jr.", and returns it, moving
+// that ownership back to main, where it's assigned to full. the original block
+// of memory is freed at the end of add_suffix, and it would cause UB to attempt
+// access after that point in execution
+
+// sometimes you need to keep the original value around too, and .clone will
+// allow you to do that. note, however, that it will create a whole new copy of
+// the cloned data!
+let a = String::from("Fox");
+let a_clone = a.clone();
+// a_clone can now be moved to another variable/function while preserving our
+// access to a. String is another heap type, like Box, Vec, and others
+
+
+
+////-- BORROWING --////
+
+// another important concept in Rust memory management, borrowing allows us to
+// pass values around without moving ownership. a reference, denoted with an
+// ampersand, is a non-owning pointer. without ownership, the memory it points
+// to will not be freed when the stack frame containing it is freed, allowing us
+// to continue to access it from the prior owner
+
+// a similar example to the longer one from OWNERSHIP, using references:
+fn main() {
+    let first = String::from("Ferris");
+    say_hi(&first);
+    println!("{first}");  // still accessible here!
+}
+
+fn say_hi(name: &String) {
+    println!("hi, {}!", name);
+}
+// as you can see, in the called function, the ampersand is added to the type,
+// indicating that it accepts a reference to a String. in the caller, the
+// ampersand is instead on the variable name, since we're getting the reference
+// from the variable
+
+// references are in fact pointers to pointers; in that example, name is a
+// pointer to first from the main function, which in turn is a pointer to the
+// heap allocation with the string
