@@ -59,6 +59,29 @@ println!("Thirty-two, on the other hand, would be {number}.");
 
 
 
+////-- MATH --////
+
+// basic math syntax
+12 + 12;
+12 - 6;
+12 * 2;
+12 / 5;      // truncates
+12.0 / 5.0;  // does not
+12 % 5;
+
+// when integer overflows happen in a dev build it causes a PANIC, crashing the
+// whole programs. in release builds, it just overflows like it would in C. but
+// this is bad to rely on; instead, there is a collection of math methods for
+// various behaviors desired upon overflow
+wrapping_add()     // wraps around to the other end of the range
+checked_div()      // returns None on overflow
+overflowing_mul()  // wraps + returns a bool indicating whether it overflowed
+saturating_sub()   // returns value at either end of range rather than overflow
+// even more integer methods can be found here:
+// https://doc.rust-lang.org/std/primitive.u32.html
+
+
+
 ////-- STATEMENTS AND EXPRESSIONS --////
 
 // another thing to remember is what statements and expressions are. they're
@@ -178,26 +201,35 @@ b[1] = 12;  // b == [5, 12, 3, 2, 1]
 
 
 
-////-- MATH --////
+////-- VECTORS --////
 
-// basic math syntax
-12 + 12;
-12 - 6;
-12 * 2;
-12 / 5;      // truncates
-12.0 / 5.0;  // does not
-12 % 5;
+// vectors are variable-length collections, still single-type though. they are
+// allocated on the heap, rather than the stack, as arrays are
+// creating a new empty vector:
+let v: Vec<i32> = Vec::new();
+// this uses a generic in the type (the angle brackets), which will be covered
+// in detail in a later section
 
-// when integer overflows happen in a dev build it causes a PANIC, crashing the
-// whole programs. in release builds, it just overflows like it would in C. but
-// this is bad to rely on; instead, there is a collection of math methods for
-// various behaviors desired upon overflow
-wrapping_add()     // wraps around to the other end of the range
-checked_div()      // returns None on overflow
-overflowing_mul()  // wraps + returns a bool indicating whether it overflowed
-saturating_sub()   // returns value at either end of range rather than overflow
-// even more integer methods can be found here:
-// https://doc.rust-lang.org/std/primitive.u32.html
+// a macro is available for conveniently creating a vector with some values
+let v = vec![1, 2, 3];
+
+// you can add values to one with .push, so long as it's mutable
+let mut v = Vec::new();
+v.push(4);  // v == vec![4]
+// note the lack of type annotation there. Rust can infer it even from later
+// lines. very interesting...
+
+// access can be achieved with indexing syntax
+let v = vec![1, 2, 3];
+let two = v&[1];  // == 2
+// if you attempt to access an element that doesn't exist, the program panics.
+// more on that & symbol later. the safer alternative is .get, which returns an
+// Option (more on that later also)
+let three: Option<&i32> = v.get(2);
+match three {
+    Some(three) => println!("Third element: {three}"),
+    None => println!("No third element!"),
+}
 
 
 
