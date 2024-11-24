@@ -386,6 +386,24 @@ fn say_hi(name: &String) {
 // ampersand is instead on the variable name, since we're getting the reference
 // from the variable
 
-// references are in fact pointers to pointers; in that example, name is a
-// pointer to first from the main function, which in turn is a pointer to the
-// heap allocation with the string
+// references are themselves pointers to the referenced object; in that example,
+// name is a pointer to first from the main function, which in turn is a pointer
+// to the heap allocation with the string. in a simpler example, the reference
+// would be a pointer to the actual value
+fn main() {
+    let x = 12;
+    let a = &x;  // pointer to the value of x; 12
+
+    let bx = Box::new(12);  // pointer to 12
+    let ax = &x;  // pointer to pointer to 12
+}
+
+// dereferencing is also pretty familiar
+let x = Box::new(12);
+let x_abs_explicit = i32::abs(*x)  // explicitly dereferencing x, which gets the value within: 12
+let x_abs_implicit = x.abs()  // implicitly dereferencing x with call using dot operator; also 12
+let y = &x;  // get a reference to x
+let y_abs_implicit = x.abs()  // implicitly dereferencing _twice_ with call using dot operator; still 12!
+// the book promises to discuss this more later but it's not clear when from the
+// headings so we'll see I guess. I know this dot operator bit has some relation
+// to implementations of methods for types...?
