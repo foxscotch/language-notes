@@ -291,6 +291,7 @@ for element in a {
 // the standard library has ranges, similar to (but less flexible than) Python's
 for element in (1..4) {
     // consecutively, `element == i` where i is 1 through 3; end value excluded
+    // ..= for end-inclusive ranges
 }
 
 
@@ -407,3 +408,21 @@ let y_abs_implicit = x.abs()  // implicitly dereferencing _twice_ with call usin
 // the book promises to discuss this more later but it's not clear when from the
 // headings so we'll see I guess. I know this dot operator bit has some relation
 // to implementations of methods for types...?
+
+// a "place", as the book calls it, is anything that can go on the left hand
+// side of an assignment; field access for tuples and structs, array index
+// access, dereferences, regular variables, and any combination of these
+
+// a place, at any given time, has three categories of permissions: read, write,
+// and own. the meanings of these should be pretty obvious at this point, but
+// for clarity, the own permission determines whether the data can be moved or
+// dropped.
+
+// the "borrow checker" is part of the compiler, responsible for ensuring that
+// the code doesn't violate these access rules
+
+// references can be mutable, which is made part of its type
+let mut v = vec![1, 2, 3];
+let num: &mut i32 = &mut v[2];
+// num itself is not mutable, but you can mutably access the referenced data
+*num += 1;  // v == [1, 2, 4]
