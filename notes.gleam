@@ -73,6 +73,47 @@ todo as "not finished yet!"
 let assert Ok(n) = some_value as "this should never be an error"
 
 
+// |==-- OPERATORS --==|
+
+// equality operators are type safe (same type on both sides) and check for
+// structural equivalence, _not_ identity
+15 == 15  // True
+15 != 15  // False
+
+// boolean operators
+True && False  // False
+True || False  // True
+True && False && True  // False; short-circuits
+!True  // False
+
+// number stuff is mostly normal
+1 + 1 == 2
+5 - 1 == 4
+5 / 2 == 2  // truncated!
+3 * 3 == 9
+5 % 2 == 1
+2 > 1 == True
+2 < 1 == False
+2 >= 1 == True
+2 <= 1 == False
+
+// except that floats have their own operators; no overloading
+1.0 +. 1.5 == 2.5
+5.0 -. 1.5 == 3.5
+5.0 /. 2.5 == 2.0
+3.0 *. 3.5 == 10.5
+2.2 >. 1.3 == True
+2.2 <. 1.3 == False
+2.2 >=. 1.3 == True
+2.2 <=. 1.3 == False
+
+// also division by zero results in zero, no errors, no NaN
+5 / 0 == 0
+
+// strings concatenated with <>
+"hello " <> "world"
+
+
 // |==-- BUILT IN TYPES --==|
 
 // furthermore, there's no null*, no implicit conversions, and no exceptions
@@ -166,47 +207,6 @@ pub fn new(i: Int) -> PositiveInt {
     False -> PositiveInt(0)
   }
 }
-
-
-// |==-- OPERATORS --==|
-
-// equality operators are type safe (same type on both sides) and check for
-// structural equivalence, _not_ identity
-15 == 15  // True
-15 != 15  // False
-
-// boolean operators
-True && False  // False
-True || False  // True
-True && False && True  // False; short-circuits
-!True  // False
-
-// number stuff is mostly normal
-1 + 1 == 2
-5 - 1 == 4
-5 / 2 == 2  // truncated!
-3 * 3 == 9
-5 % 2 == 1
-2 > 1 == True
-2 < 1 == False
-2 >= 1 == True
-2 <= 1 == False
-
-// except that floats have their own operators; no overloading
-1.0 +. 1.5 == 2.5
-5.0 -. 1.5 == 3.5
-5.0 /. 2.5 == 2.0
-3.0 *. 3.5 == 10.5
-2.2 >. 1.3 == True
-2.2 <. 1.3 == False
-2.2 >=. 1.3 == True
-2.2 <=. 1.3 == False
-
-// also division by zero results in zero, no errors, no NaN
-5 / 0 == 0
-
-// strings concatenated with <>
-"hello " <> "world"
 
 
 // |==-- CONTROL FLOW --==|
