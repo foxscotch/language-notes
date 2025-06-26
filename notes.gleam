@@ -409,3 +409,28 @@ pub fn now() -> DateTime
 // it's even possible to have both external and Gleam implementations. if the
 // function is defined with a body, that will be used when building for a target
 // that doesn't have a corresponding @external attribute. pretty neat
+
+
+// |==-- EXAMPLE CODE --==|
+
+// repeat a list until the desired length is met
+pub fn forever(list: List(a), until max_iterations: Int) -> List(a) {
+  list.reverse(forever_t_i(list, list, [], max_iterations, 0))
+}
+
+// tail recursive implementation function; returns a list that will need to be reversed
+// I'm not sure if a non-tail-recursive implementation is realistic? I tried, but ran into trouble because we
+// necessarily need the generated list, the original list, _and_ the current read portion of the original list
+fn forever_i(original_list: List(a), current_read_list: List(a), current_gen_list: List(a), max_iterations: Int, current_iterations: Int) -> List(a) {
+  case current_iterations {
+    i if i == max_iterations -> current_gen_list
+    _ -> case current_read_list {
+      [a] -> forever_i(original_list, original_list, [a, ..current_gen_list], max_iterations, current_iterations + 1)
+      [a, ..rest] -> forever_i(original_list, rest, [a, ..current_gen_list], max_iterations, current_iterations + 1)
+      // last case shouldn't be reachable, since the first replaces current_read_list, but we gotta be exhaustive
+      [] -> forever_i(original_list, original_list, current_gen_list, max_iterations, current_iterations + 1)
+    }
+  }
+}
+
+forever([1, 2, 3], 8)  // [1, 2, 3, 1, 2, 3, 1, 2]
