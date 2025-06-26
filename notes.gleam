@@ -238,7 +238,7 @@ case 2 {
 case "hello freak" {
   "hello " <> designee -> designee  // will match any string starting with "hello "
   _ -> ""
-} // "freka"
+} // "freak"
 
 // lists too, in combination with the cons operator
 case [1, 2, 3] {
