@@ -54,7 +54,6 @@ import gleam/io.{println}  // unqualified import; not preferred, but could be us
 import gleam/string_tree.{type StringTree}
 
 // module exports can be achieved with the pub keyword (but not with variables)
-pub import something/x  // re-exports x
 pub type Whatever = SomethingElse
 pub const magic_number = 5189163
 pub fn main() {}
